@@ -28,7 +28,6 @@ const Upload: NextPage = () => {
   const onValid = (data: UploadProductForm) => {
     if (loading) return;
     uploadProduct(data);
-    console.log('현재 넘어온 data', data);
   };
   useEffect(() => {
     if (data?.ok) {
