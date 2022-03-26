@@ -9,3 +9,7 @@
 # features/auth
 
 - codes acts for auth feature
+
+# features/products
+
+- codes acts for product features
