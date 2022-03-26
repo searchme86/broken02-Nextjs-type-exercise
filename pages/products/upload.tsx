@@ -31,6 +31,7 @@ const Upload: NextPage = () => {
   };
   useEffect(() => {
     if (data?.ok) {
+      console.log(data);
       router.push(`/products/${data.product.id}`);
     }
   }, [data, router]);
