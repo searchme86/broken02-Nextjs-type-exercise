@@ -14,6 +14,12 @@
 
 - codes acts for auth feature
 
+<<<<<<< HEAD
 # features/product
 
 - codes acts for produdct
+=======
+# features/products
+
+- codes acts for product features
+>>>>>>> features/testingA/products
