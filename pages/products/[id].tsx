@@ -20,12 +20,13 @@ interface ItemDetailResponse {
 
 const ItemDetail: NextPage = () => {
   const router = useRouter();
-  const { data } = useSWR<ItemDetailResponse>(
+  const { data, mutate } = useSWR<ItemDetailResponse>(
     router.query.id ? `/api/products/${router.query.id}` : null
   );
   const [toggleFav] = useMutation(`/api/products/${router.query.id}/fav`);
-
-  const onFavoriteClick = () => {
+  const onFavClick = () => {
+    if (!data) return;
+    mutate({ ...data, isLiked: !data.isLiked }, false);
     toggleFav({});
   };
   return (
@@ -57,26 +58,26 @@ const ItemDetail: NextPage = () => {
             <div className="flex items-center justify-between space-x-2">
               <Button large text="Talk to seller" />
               <button
-                onClick={onFavoriteClick}
+                onClick={onFavClick}
                 className={cls(
-                  'flex items-center justify-center rounded-md p-3 ',
+                  'flex items-center justify-center rounded-md p-3 hover:bg-gray-100 ',
                   data?.isLiked
-                    ? 'text-red-400 hover:text-gray-500'
-                    : 'text-gray-400 hover:bg-gray-100 hover:text-gray-500'
+                    ? 'text-red-500  hover:text-red-600'
+                    : 'text-gray-400  hover:text-gray-500'
                 )}
               >
                 {data?.isLiked ? (
                   <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    viewBox="0 0 20 20"
+                    className="h-6 w-6"
                     fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
                       fillRule="evenodd"
                       d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
                       clipRule="evenodd"
-                    />
+                    ></path>
                   </svg>
                 ) : (
                   <svg
@@ -102,7 +103,7 @@ const ItemDetail: NextPage = () => {
         <div>
           <h2 className="text-2xl font-bold text-gray-900">Similar items</h2>
           <div className=" mt-6 grid grid-cols-2 gap-4">
-            {data?.relatedProducts.map((product) => (
+            {data?.relatedProducts?.map((product) => (
               <div key={product.id}>
                 <div className="mb-4 h-56 w-full bg-slate-300" />
                 <h3 className="-mb-1 text-gray-700">{product.name}</h3>
