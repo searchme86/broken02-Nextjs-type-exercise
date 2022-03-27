@@ -14,9 +14,10 @@ async function handler(
     profile,
   });
 }
+
 export default withApiSession(
   withHandler({
-    method: 'GET',
+    methods: ['GET'],
     handler,
   })
 );

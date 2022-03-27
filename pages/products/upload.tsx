@@ -8,18 +8,15 @@ import useMutation from '@libs/client/useMutation';
 import { useEffect } from 'react';
 import { Product } from '@prisma/client';
 import { useRouter } from 'next/router';
-
 interface UploadProductForm {
   name: string;
   price: number;
   description: string;
 }
-
 interface UploadProductMutation {
   ok: boolean;
   product: Product;
 }
-
 const Upload: NextPage = () => {
   const router = useRouter();
   const { register, handleSubmit } = useForm<UploadProductForm>();
@@ -31,8 +28,7 @@ const Upload: NextPage = () => {
   };
   useEffect(() => {
     if (data?.ok) {
-      console.log(data);
-      router.push(`/products/${data.product.id}`);
+      router.replace(`/products/${data.product.id}`);
     }
   }, [data, router]);
   return (
