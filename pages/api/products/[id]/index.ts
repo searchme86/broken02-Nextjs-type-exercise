@@ -10,7 +10,6 @@ async function handler(
     query: { id },
     session: { user },
   } = req;
-
   const product = await client.product.findUnique({
     where: {
       id: +id.toString(),
@@ -40,7 +39,6 @@ async function handler(
       },
     },
   });
-
   const isLiked = Boolean(
     await client.fav.findFirst({
       where: {
@@ -52,7 +50,6 @@ async function handler(
       },
     })
   );
-
   res.json({ ok: true, product, isLiked, relatedProducts });
 }
 
